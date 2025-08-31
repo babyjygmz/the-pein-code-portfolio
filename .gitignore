@@ -1,0 +1,31 @@
+# Exclude unnecessary files
+*.log
+email_log.txt
+contact_message_*.txt
+email_backup_*.txt
+message_*.txt
+
+# Exclude debug and test files
+debug_*.html
+test_*.html
+test_*.php
+simple_*.html
+
+# Exclude backup files
+*.zip
+*.bak
+*.backup
+
+# Exclude system files
+.DS_Store
+Thumbs.db
+
+# Exclude IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Exclude temporary files
+*.tmp
+*.temp
