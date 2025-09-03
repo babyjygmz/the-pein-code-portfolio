@@ -59,7 +59,7 @@ full_dev/
 This project is deployed using GitHub Pages for easy access and sharing.
 
 ### Live Demo
-Visit the live portfolio: [Your GitHub Pages URL will be here]
+Visit the live portfolio: [https://babyjygmz.github.io/the-pein-code-portfolio/](https://babyjygmz.github.io/the-pein-code-portfolio/)
 
 ## 📧 Contact
 
