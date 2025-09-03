@@ -1257,31 +1257,7 @@ h1, h2, h3, h4, h5, h6 {
     color: #ffffff;
 }
 
-.social-links {
-    display: flex;
-    gap: 0.8rem;
-}
 
-.social-links a {
-    width: 40px;
-    height: 40px;
-    background: #333333;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    text-decoration: none;
-    transition: all 0.3s ease;
-    border: 1px solid #333333;
-}
-
-.social-links a:hover {
-    background: #ffffff;
-    color: #000000;
-    transform: translateY(-2px);
-    box-shadow: 0 5px 20px rgba(255, 255, 255, 0.2);
-}
 
 .footer-bottom {
     text-align: center;
