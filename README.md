@@ -1,179 +1,97 @@
-# THE PEIN CODE - Fullstack Development Portfolio
+# THE PEIN CODE - Professional Portfolio
 
-A modern, professional portfolio website showcasing comprehensive software development skills and services. Built with HTML5, CSS3, and JavaScript, featuring a responsive design and smooth animations.
+A modern, responsive portfolio website showcasing professional web development services and projects.
 
 ## 🚀 Features
 
-### **Professional Design**
-- Modern, clean aesthetic with gradient backgrounds
-- Responsive design that works on all devices
-- Smooth scrolling navigation
-- Interactive hover effects and animations
-
-### **Comprehensive Skills Showcase**
-- **Frontend Development**: HTML5, CSS3, JavaScript (ES6+), React.js, Vue.js, Angular, Sass/SCSS, Bootstrap, Tailwind CSS
-- **Backend Development**: Node.js, Python, PHP, Java, C#, SQL Databases, NoSQL, Docker
-- **Mobile Development**: React Native, Swift (iOS), Android (Kotlin/Java)
-- **Other Technologies**: Git/GitHub, AWS, Linux/Unix
-
-### **Interactive Elements**
-- Mobile-responsive navigation menu
-- Smooth scroll animations
-- Form validation and notifications
-- Intersection Observer animations
-- Loading effects and transitions
-
-### **Professional Sections**
-- Hero section with animated code display
-- About section with company statistics
-- Detailed skills breakdown by category
-- Services offered
-- Contact form with validation
-- Professional footer with social links
+- **Responsive Design**: Optimized for all devices and screen sizes
+- **Modern UI/UX**: Clean, professional design with smooth animations
+- **Portfolio Showcase**: Interactive project gallery with detailed descriptions
+- **Skills Display**: Comprehensive technical expertise section
+- **Contact Information**: Easy-to-find contact details and social links
+- **Smooth Navigation**: Seamless scrolling and mobile-friendly navigation
 
 ## 🛠️ Technologies Used
 
-- **HTML5**: Semantic markup and accessibility
-- **CSS3**: Modern CSS features including Grid, Flexbox, animations
-- **JavaScript (ES6+)**: Modern JavaScript with modules and async/await
-- **Font Awesome**: Professional icons
-- **Google Fonts**: Inter font family for modern typography
+### Frontend
+- HTML5
+- CSS3 (with custom animations and responsive design)
+- JavaScript (ES6+)
+- Font Awesome Icons
+- Google Fonts (Inter & Playfair Display)
 
-## 📱 Responsive Design
+### Backend & Tools
+- Node.js
+- PHP
+- MySQL
+- MongoDB
+- Git & GitHub
 
-The portfolio is fully responsive and optimized for:
-- Desktop computers
-- Tablets
-- Mobile phones
-- All screen sizes and orientations
+## 📁 Project Structure
 
-## 🚀 Getting Started
-
-### **Prerequisites**
-- A modern web browser (Chrome, Firefox, Safari, Edge)
-- Basic understanding of HTML/CSS/JavaScript (for customization)
-
-### **Installation**
-
-1. **Clone or Download** the project files
-2. **Open** `index.html` in your web browser
-3. **Customize** the content to match your needs
-
-### **File Structure**
 ```
-THE PEIN CODE Portfolio/
-├── index.html          # Main HTML file
-├── styles.css          # CSS styles and animations
+full_dev/
+├── index.html          # Main portfolio page
+├── styles.css          # Custom CSS styles
 ├── script.js           # JavaScript functionality
-└── README.md           # This documentation file
+├── professional-photo/ # Profile images
+├── portfolio/          # Project screenshots
+│   ├── analytic/
+│   ├── booking/
+│   ├── ecom/
+│   ├── educ/
+│   ├── funnel/
+│   └── porblog/
+└── README.md           # Project documentation
 ```
 
-## 🎨 Customization
+## 🎯 Portfolio Projects
 
-### **Personal Information**
-- Update company name, description, and contact details in `index.html`
-- Modify statistics in the About section
-- Change contact form fields as needed
+1. **Portfolio & Blog** - Professional portfolio with integrated blog system
+2. **E-Learning Platform** - Comprehensive online education system
+3. **Analytics Dashboard** - Real-time data visualization platform
+4. **Online Booking System** - Advanced reservation and scheduling platform
+5. **E-commerce Platform** - Complete online shopping solution
+6. **Funnel Design** - High-converting sales funnel system
 
-### **Skills & Technologies**
-- Add or remove programming languages and frameworks
-- Update skill descriptions and expertise levels
-- Modify service offerings
+## 🚀 Deployment
 
-### **Styling**
-- Customize colors in `styles.css`
-- Adjust animations and transitions
-- Modify layout and spacing
+This project is deployed using GitHub Pages for easy access and sharing.
 
-### **Content**
-- Update hero section messaging
-- Modify service descriptions
-- Change contact information
+### Live Demo
+Visit the live portfolio: [Your GitHub Pages URL will be here]
 
-## 📧 Contact Form
+## 📧 Contact
 
-The contact form includes:
-- Name, email, subject, and message fields
-- Client-side validation
-- Success/error notifications
-- Form reset after submission
+- **Email**: bbyjygmz0103@gmail.com
+- **Phone**: +63 9935884942
+- **Location**: Remote / Worldwide
 
-**Note**: The form currently shows a success message. To make it functional, you'll need to:
-1. Set up a backend service (PHP, Node.js, etc.)
-2. Configure email sending (SendGrid, Nodemailer, etc.)
-3. Update the form submission handler in `script.js`
+## 🔧 Setup Instructions
 
-## 🌐 Deployment
+1. Clone the repository:
+   ```bash
+   git clone [your-repository-url]
+   ```
 
-### **Local Development**
-- Open `index.html` directly in a browser
-- Use a local server (XAMPP, WAMP, etc.) for testing
+2. Open `index.html` in your web browser
 
-### **Web Hosting**
-- Upload files to any web hosting service
-- Ensure all files are in the same directory
-- Test functionality after deployment
+3. For local development, you can use any local server:
+   ```bash
+   # Using Python
+   python -m http.server 8000
+   
+   # Using Node.js
+   npx serve .
+   ```
 
-### **GitHub Pages**
-- Push to a GitHub repository
-- Enable GitHub Pages in repository settings
-- Your portfolio will be available at `username.github.io/repository-name`
+## 📝 License
 
-## 🔧 Browser Support
-
-- **Chrome**: Full support
-- **Firefox**: Full support
-- **Safari**: Full support
-- **Edge**: Full support
-- **Internet Explorer**: Limited support (not recommended)
-
-## 📱 Mobile Features
-
-- Hamburger menu for mobile navigation
-- Touch-friendly interface
-- Optimized layouts for small screens
-- Responsive images and content
-
-## 🎯 SEO Features
-
-- Semantic HTML structure
-- Meta tags for social sharing
-- Clean URL structure
-- Fast loading times
-- Mobile-first design
-
-## 🚀 Performance
-
-- Optimized CSS and JavaScript
-- Minimal external dependencies
-- Efficient animations
-- Fast page load times
-
-## 📄 License
-
-This portfolio template is created for THE PEIN CODE and can be customized for personal or commercial use.
-
-## 🤝 Support
-
-For questions or customization help:
-- Review the code comments
-- Check browser console for errors
-- Ensure all files are properly linked
-- Test on different devices and browsers
-
-## 🔄 Updates
-
-To keep your portfolio current:
-- Regularly update skills and technologies
-- Add new projects and achievements
-- Update contact information
-- Refresh design elements as needed
+This project is open source and available under the [MIT License](LICENSE).
 
 ---
 
-**THE PEIN CODE** - Professional Software Development Services
-
-*Built with modern web technologies and best practices*
+**THE PEIN CODE** - Crafting innovative digital solutions with precision and creativity.
 
 
 
