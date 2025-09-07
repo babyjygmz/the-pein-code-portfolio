@@ -348,20 +348,244 @@ if (!document.querySelector('#reveal-styles')) {
     document.head.appendChild(style);
 }
 
-// Portfolio Modal Functionality
+// Portfolio Modal Functionality with Swipeable Gallery
 document.addEventListener('DOMContentLoaded', function() {
     const modal = document.getElementById('portfolioModal');
     const modalClose = document.getElementById('modalClose');
+    const galleryModal = document.getElementById('galleryModal');
+    const galleryClose = document.getElementById('galleryClose');
+    const galleryPrev = document.getElementById('galleryPrev');
+    const galleryNext = document.getElementById('galleryNext');
+    const galleryImage = document.getElementById('galleryImage');
+    const galleryTitle = document.getElementById('galleryTitle');
+    const galleryCounter = document.getElementById('galleryCounter');
     const portfolioItems = document.querySelectorAll('.portfolio-item');
     
-    // Close modal when clicking close button
+    let currentImages = [];
+    let currentIndex = 0;
+    let currentProject = '';
+    
+    // Project data with images
+    const projectData = {
+        virtualassistentportfolio: {
+            title: 'Virtual Assistant Portfolio',
+            images: [
+                'virtualassistentportfolio/Screenshot 2025-09-08 002831.png',
+                'virtualassistentportfolio/Screenshot 2025-09-08 002844.png',
+                'virtualassistentportfolio/Screenshot 2025-09-08 002855.png',
+                'virtualassistentportfolio/Screenshot 2025-09-08 002910.png',
+                'virtualassistentportfolio/Screenshot 2025-09-08 002922.png',
+                'virtualassistentportfolio/Screenshot 2025-09-08 002929.png',
+                'virtualassistentportfolio/Screenshot 2025-09-08 002937.png',
+                'virtualassistentportfolio/Screenshot 2025-09-08 002946.png',
+                'virtualassistentportfolio/Screenshot 2025-09-08 002956.png'
+            ]
+        },
+        utensilcraft: {
+            title: 'Utensil Craft',
+            images: [
+                'UtensilCraft/Screenshot 2025-09-07 235248.png',
+                'UtensilCraft/Screenshot 2025-09-07 235301.png',
+                'UtensilCraft/Screenshot 2025-09-07 235311.png',
+                'UtensilCraft/Screenshot 2025-09-07 235320.png',
+                'UtensilCraft/Screenshot 2025-09-07 235338.png',
+                'UtensilCraft/Screenshot 2025-09-07 235346.png',
+                'UtensilCraft/Screenshot 2025-09-07 235356.png',
+                'UtensilCraft/Screenshot 2025-09-07 235404.png'
+            ]
+        },
+        teacherportfolio: {
+            title: 'Teacher Portfolio',
+            images: [
+                'Teacherportfolio/Screenshot 2025-09-08 002132.png',
+                'Teacherportfolio/Screenshot 2025-09-08 002153.png',
+                'Teacherportfolio/Screenshot 2025-09-08 002201.png',
+                'Teacherportfolio/Screenshot 2025-09-08 002208.png',
+                'Teacherportfolio/Screenshot 2025-09-08 002217.png',
+                'Teacherportfolio/Screenshot 2025-09-08 002225.png'
+            ]
+        },
+        stylehub: {
+            title: 'Style Hub',
+            images: [
+                'StyleHub/Screenshot 2025-09-07 234821.png',
+                'StyleHub/Screenshot 2025-09-07 234833.png',
+                'StyleHub/Screenshot 2025-09-07 234843.png',
+                'StyleHub/Screenshot 2025-09-07 234903.png',
+                'StyleHub/Screenshot 2025-09-07 234914.png',
+                'StyleHub/Screenshot 2025-09-07 234924.png',
+                'StyleHub/Screenshot 2025-09-07 234935.png',
+                'StyleHub/Screenshot 2025-09-07 234945.png',
+                'StyleHub/Screenshot 2025-09-07 234955.png',
+                'StyleHub/Screenshot 2025-09-07 235003.png',
+                'StyleHub/Screenshot 2025-09-07 235012.png',
+                'StyleHub/Screenshot 2025-09-07 235022.png',
+                'StyleHub/Screenshot 2025-09-07 235034.png'
+            ]
+        },
+        pureluxsoap: {
+            title: 'Pure Lux Soap',
+            images: [
+                'PureLuxSoap/Screenshot 2025-09-07 233744.png',
+                'PureLuxSoap/Screenshot 2025-09-07 233805.png',
+                'PureLuxSoap/Screenshot 2025-09-07 233816.png',
+                'PureLuxSoap/Screenshot 2025-09-07 233827.png',
+                'PureLuxSoap/Screenshot 2025-09-07 233837.png',
+                'PureLuxSoap/Screenshot 2025-09-07 233847.png',
+                'PureLuxSoap/Screenshot 2025-09-07 234002.png',
+                'PureLuxSoap/Screenshot 2025-09-07 234014.png',
+                'PureLuxSoap/Screenshot 2025-09-07 234023.png',
+                'PureLuxSoap/Screenshot 2025-09-07 234031.png',
+                'PureLuxSoap/Screenshot 2025-09-07 234043.png'
+            ]
+        },
+        paradiseretreat: {
+            title: 'Paradise Retreat',
+            images: [
+                'ParadiseRetreat/Screenshot 2025-09-07 235801.png',
+                'ParadiseRetreat/Screenshot 2025-09-07 235810.png',
+                'ParadiseRetreat/Screenshot 2025-09-07 235818.png',
+                'ParadiseRetreat/Screenshot 2025-09-07 235826.png',
+                'ParadiseRetreat/Screenshot 2025-09-07 235835.png',
+                'ParadiseRetreat/Screenshot 2025-09-07 235841.png',
+                'ParadiseRetreat/Screenshot 2025-09-07 235849.png',
+                'ParadiseRetreat/Screenshot 2025-09-07 235859.png',
+                'ParadiseRetreat/Screenshot 2025-09-07 235909.png',
+                'ParadiseRetreat/Screenshot 2025-09-07 235917.png',
+                'ParadiseRetreat/Screenshot 2025-09-07 235923.png'
+            ]
+        },
+        modelportfolio: {
+            title: 'Model Portfolio',
+            images: [
+                'Modelportfolio/Screenshot 2025-09-08 001709.png',
+                'Modelportfolio/Screenshot 2025-09-08 001717.png',
+                'Modelportfolio/Screenshot 2025-09-08 001726.png',
+                'Modelportfolio/Screenshot 2025-09-08 001733.png',
+                'Modelportfolio/Screenshot 2025-09-08 001741.png',
+                'Modelportfolio/Screenshot 2025-09-08 001750.png',
+                'Modelportfolio/Screenshot 2025-09-08 001802.png',
+                'Modelportfolio/Screenshot 2025-09-08 001810.png',
+                'Modelportfolio/Screenshot 2025-09-08 001817.png',
+                'Modelportfolio/Screenshot 2025-09-08 001824.png',
+                'Modelportfolio/Screenshot 2025-09-08 001834.png',
+                'Modelportfolio/Screenshot 2025-09-08 001843.png',
+                'Modelportfolio/Screenshot 2025-09-08 001853.png'
+            ]
+        },
+        lotion: {
+            title: 'Lotion Brand',
+            images: [
+                'Lotion/Screenshot 2025-09-07 234312.png',
+                'Lotion/Screenshot 2025-09-07 234405.png',
+                'Lotion/Screenshot 2025-09-07 234417.png',
+                'Lotion/Screenshot 2025-09-07 234425.png',
+                'Lotion/Screenshot 2025-09-07 234434.png',
+                'Lotion/Screenshot 2025-09-07 234443.png',
+                'Lotion/Screenshot 2025-09-07 234451.png',
+                'Lotion/Screenshot 2025-09-07 234458.png',
+                'Lotion/Screenshot 2025-09-07 234511.png',
+                'Lotion/Screenshot 2025-09-07 234524.png',
+                'Lotion/Screenshot 2025-09-07 234532.png',
+                'Lotion/Screenshot 2025-09-07 234540.png',
+                'Lotion/Screenshot 2025-09-07 234551.png',
+                'Lotion/Screenshot 2025-09-07 234601.png',
+                'Lotion/Screenshot 2025-09-07 234608.png',
+                'Lotion/Screenshot 2025-09-07 234617.png',
+                'Lotion/Screenshot 2025-09-07 234629.png'
+            ]
+        },
+        engineerportfolio: {
+            title: 'Engineer Portfolio',
+            images: [
+                'Engineerportfolio/Screenshot 2025-09-08 001425.png',
+                'Engineerportfolio/Screenshot 2025-09-08 001432.png',
+                'Engineerportfolio/Screenshot 2025-09-08 001439.png',
+                'Engineerportfolio/Screenshot 2025-09-08 001445.png',
+                'Engineerportfolio/Screenshot 2025-09-08 001533.png',
+                'Engineerportfolio/Screenshot 2025-09-08 001600.png',
+                'Engineerportfolio/Screenshot 2025-09-08 001610.png'
+            ]
+        },
+        edukids: {
+            title: 'EduKids',
+            images: [
+                'EduKids/Screenshot 2025-09-08 000449.png',
+                'EduKids/Screenshot 2025-09-08 000457.png',
+                'EduKids/Screenshot 2025-09-08 000506.png',
+                'EduKids/Screenshot 2025-09-08 000517.png',
+                'EduKids/Screenshot 2025-09-08 000526.png',
+                'EduKids/Screenshot 2025-09-08 000535.png',
+                'EduKids/Screenshot 2025-09-08 000816.png',
+                'EduKids/Screenshot 2025-09-08 000823.png',
+                'EduKids/Screenshot 2025-09-08 000831.png',
+                'EduKids/Screenshot 2025-09-08 000840.png',
+                'EduKids/Screenshot 2025-09-08 000850.png',
+                'EduKids/Screenshot 2025-09-08 000857.png',
+                'EduKids/Screenshot 2025-09-08 000904.png',
+                'EduKids/Screenshot 2025-09-08 000917.png',
+                'EduKids/Screenshot 2025-09-08 000925.png',
+                'EduKids/Screenshot 2025-09-08 000934.png',
+                'EduKids/Screenshot 2025-09-08 000942.png',
+                'EduKids/Screenshot 2025-09-08 000950.png',
+                'EduKids/Screenshot 2025-09-08 000959.png',
+                'EduKids/Screenshot 2025-09-08 001007.png',
+                'EduKids/Screenshot 2025-09-08 001019.png'
+            ]
+        },
+        educonnect: {
+            title: 'EduConnect',
+            images: [
+                'EduConnect/Screenshot 2025-09-08 000007.png',
+                'EduConnect/Screenshot 2025-09-08 000015.png',
+                'EduConnect/Screenshot 2025-09-08 000025.png',
+                'EduConnect/Screenshot 2025-09-08 000034.png',
+                'EduConnect/Screenshot 2025-09-08 000043.png',
+                'EduConnect/Screenshot 2025-09-08 000049.png',
+                'EduConnect/Screenshot 2025-09-08 000102.png',
+                'EduConnect/Screenshot 2025-09-08 000113.png',
+                'EduConnect/Screenshot 2025-09-08 000121.png',
+                'EduConnect/Screenshot 2025-09-08 000132.png',
+                'EduConnect/Screenshot 2025-09-08 000145.png',
+                'EduConnect/Screenshot 2025-09-08 000155.png',
+                'EduConnect/Screenshot 2025-09-08 000205.png',
+                'EduConnect/Screenshot 2025-09-08 000211.png',
+                'EduConnect/Screenshot 2025-09-08 000219.png',
+                'EduConnect/Screenshot 2025-09-08 000227.png',
+                'EduConnect/Screenshot 2025-09-08 000236.png'
+            ]
+        },
+        cinebook: {
+            title: 'Cinebook',
+            images: [
+                'Cinebook/Screenshot 2025-09-07 235539.png',
+                'Cinebook/Screenshot 2025-09-07 235551.png',
+                'Cinebook/Screenshot 2025-09-07 235600.png',
+                'Cinebook/Screenshot 2025-09-07 235611.png',
+                'Cinebook/Screenshot 2025-09-07 235621.png',
+                'Cinebook/Screenshot 2025-09-07 235630.png',
+                'Cinebook/Screenshot 2025-09-07 235637.png',
+                'Cinebook/Screenshot 2025-09-07 235644.png'
+            ]
+        }
+    };
+    
+    // Close modals
     if (modalClose) {
         modalClose.addEventListener('click', () => {
             modal.classList.remove('show');
         });
     }
     
-    // Close modal when clicking outside
+    if (galleryClose) {
+        galleryClose.addEventListener('click', () => {
+            galleryModal.classList.remove('show');
+            // Reset to first image when closing
+            currentIndex = 0;
+        });
+    }
+    
+    // Close modals when clicking outside
     if (modal) {
         modal.addEventListener('click', (e) => {
             if (e.target === modal) {
@@ -370,12 +594,124 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // Close modal with Escape key
+    if (galleryModal) {
+        galleryModal.addEventListener('click', (e) => {
+            if (e.target === galleryModal) {
+                galleryModal.classList.remove('show');
+                // Reset to first image when closing
+                currentIndex = 0;
+            }
+        });
+    }
+    
+    // Close modals with Escape key
     document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && modal.classList.contains('show')) {
-            modal.classList.remove('show');
+        if (e.key === 'Escape') {
+            if (modal.classList.contains('show')) {
+                modal.classList.remove('show');
+            }
+            if (galleryModal.classList.contains('show')) {
+                galleryModal.classList.remove('show');
+                // Reset to first image when closing
+                currentIndex = 0;
+            }
         }
     });
+    
+    // Gallery navigation
+    if (galleryPrev) {
+        galleryPrev.addEventListener('click', () => {
+            navigateGallery(-1);
+        });
+    }
+    
+    if (galleryNext) {
+        galleryNext.addEventListener('click', () => {
+            navigateGallery(1);
+        });
+    }
+    
+    // Keyboard navigation for gallery
+    document.addEventListener('keydown', (e) => {
+        if (galleryModal.classList.contains('show')) {
+            if (e.key === 'ArrowLeft') {
+                navigateGallery(-1);
+            } else if (e.key === 'ArrowRight') {
+                navigateGallery(1);
+            }
+        }
+    });
+    
+    // Touch/swipe support
+    let startX = 0;
+    let endX = 0;
+    
+    if (galleryModal) {
+        galleryModal.addEventListener('touchstart', (e) => {
+            startX = e.touches[0].clientX;
+        });
+        
+        galleryModal.addEventListener('touchend', (e) => {
+            endX = e.changedTouches[0].clientX;
+            handleSwipe();
+        });
+    }
+    
+    function handleSwipe() {
+        const threshold = 50;
+        const diff = startX - endX;
+        
+        if (Math.abs(diff) > threshold) {
+            if (diff > 0) {
+                navigateGallery(1); // Swipe left - next image
+            } else {
+                navigateGallery(-1); // Swipe right - previous image
+            }
+        }
+    }
+    
+    function navigateGallery(direction) {
+        currentIndex += direction;
+        
+        if (currentIndex < 0) {
+            currentIndex = currentImages.length - 1;
+        } else if (currentIndex >= currentImages.length) {
+            currentIndex = 0;
+        }
+        
+        updateGalleryImage();
+    }
+    
+    function updateGalleryImage() {
+        if (currentImages.length > 0) {
+            galleryImage.src = currentImages[currentIndex];
+            galleryImage.alt = `${currentProject} - Image ${currentIndex + 1}`;
+            galleryCounter.textContent = `${currentIndex + 1} / ${currentImages.length}`;
+        }
+    }
+    
+    function openGallery(projectType) {
+        const project = projectData[projectType];
+        if (project) {
+            currentImages = project.images;
+            currentIndex = 0; // Always start with the first image
+            currentProject = project.title;
+            
+            galleryTitle.textContent = project.title;
+            
+            // Force show the first image
+            if (currentImages.length > 0) {
+                // Reset to first image
+                currentIndex = 0;
+                
+                // Use updateGalleryImage to ensure consistency
+                updateGalleryImage();
+                
+                // Show modal immediately
+                galleryModal.classList.add('show');
+            }
+        }
+    }
     
     // Portfolio item click handlers
     portfolioItems.forEach(item => {
@@ -384,361 +720,8 @@ document.addEventListener('DOMContentLoaded', function() {
             overlay.addEventListener('click', (e) => {
                 e.preventDefault();
                 const projectType = item.getAttribute('data-project');
-                
-                if (projectType === 'analytics') {
-                    showAnalyticsModal();
-                } else if (projectType === 'booking') {
-                    showBookingModal();
-                } else if (projectType === 'education') {
-                    showEducationModal();
-                } else if (projectType === 'funnel') {
-                    showFunnelModal();
-                } else if (projectType === 'porblog') {
-                    showPorblogModal();
-                } else if (projectType === 'ecom') {
-                    showEcomModal();
-                }
+                openGallery(projectType);
             });
         }
     });
-    
-    function showAnalyticsModal() {
-        const modalTitle = document.getElementById('modalTitle');
-        const modalBody = document.getElementById('modalBody');
-        
-        modalTitle.textContent = 'Analytics Dashboard';
-        
-        modalBody.innerHTML = `
-            <div class="analytics-description">
-                <h3>Real-time Data Visualization Platform</h3>
-                <p>A comprehensive analytics dashboard built with Angular, Express.js, and MySQL. This platform provides real-time insights into business performance with interactive charts, customizable widgets, and advanced filtering capabilities.</p>
-                <p>The dashboard features responsive design, dark/light theme switching, and seamless data integration from multiple sources.</p>
-                
-                <div class="analytics-features">
-                    <div class="feature-item">
-                        <i class="fas fa-chart-line"></i>
-                        <span>Real-time Charts</span>
-                    </div>
-                    <div class="feature-item">
-                        <i class="fas fa-filter"></i>
-                        <span>Advanced Filtering</span>
-                    </div>
-                    <div class="feature-item">
-                        <i class="fas fa-mobile-alt"></i>
-                        <span>Responsive Design</span>
-                    </div>
-                    <div class="feature-item">
-                        <i class="fas fa-palette"></i>
-                        <span>Theme Switching</span>
-                    </div>
-                    <div class="feature-item">
-                        <i class="fas fa-database"></i>
-                        <span>Data Integration</span>
-                    </div>
-                    <div class="feature-item">
-                        <i class="fas fa-users"></i>
-                        <span>User Management</span>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="analytics-gallery">
-                <div class="analytics-item">
-                    <img src="analytic/Screenshot 2025-08-29 015322.png" alt="Analytics Dashboard - Main View">
-                </div>
-                
-                <div class="analytics-item">
-                    <img src="analytic/Screenshot 2025-08-29 014440.png" alt="Analytics Dashboard - Detailed Analytics">
-                </div>
-                
-                <div class="analytics-item">
-                    <img src="analytic/Screenshot 2025-08-29 012323.png" alt="Analytics Dashboard - Mobile View">
-                </div>
-            </div>
-        `;
-        
-        modal.classList.add('show');
-    }
-    
-    function showBookingModal() {
-        const modalTitle = document.getElementById('modalTitle');
-        const modalBody = document.getElementById('modalBody');
-        
-        modalTitle.textContent = 'Online Booking System';
-        
-        modalBody.innerHTML = `
-            <div class="analytics-description">
-                <h3>Advanced Reservation & Appointment Platform</h3>
-                <p>A sophisticated online booking system built with HTML5, Express.js, and MongoDB. This platform enables seamless appointment scheduling, reservation management, and calendar integration for businesses and service providers.</p>
-                <p>The system features real-time availability checking, automated confirmations, and a user-friendly interface for both customers and administrators.</p>
-                
-                <div class="analytics-features">
-                    <div class="feature-item">
-                        <i class="fas fa-calendar-alt"></i>
-                        <span>Appointment Scheduling</span>
-                    </div>
-                    <div class="feature-item">
-                        <i class="fas fa-clock"></i>
-                        <span>Real-time Availability</span>
-                    </div>
-                    <div class="feature-item">
-                        <i class="fas fa-bell"></i>
-                        <span>Automated Confirmations</span>
-                    </div>
-                    <div class="feature-item">
-                        <i class="fas fa-users"></i>
-                        <span>User Management</span>
-                    </div>
-                    <div class="feature-item">
-                        <i class="fas fa-chart-bar"></i>
-                        <span>Booking Analytics</span>
-                    </div>
-                    <div class="feature-item">
-                        <i class="fas fa-mobile-alt"></i>
-                        <span>Mobile Responsive</span>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="analytics-gallery">
-                <div class="analytics-item">
-                    <img src="booking/Screenshot 2025-08-29 173301.png" alt="Online Booking System - Main Interface">
-                </div>
-                
-                <div class="analytics-item">
-                    <img src="booking/Screenshot 2025-08-29 164027.png" alt="Online Booking System - Booking Process">
-                </div>
-            </div>
-        `;
-        
-        modal.classList.add('show');
-    }
-    
-    function showEducationModal() {
-        const modalTitle = document.getElementById('modalTitle');
-        const modalBody = document.getElementById('modalBody');
-        
-        modalTitle.textContent = 'E-Learning Platform';
-        
-        modalBody.innerHTML = `
-            <div class="analytics-description">
-                <h3>Comprehensive Online Education System</h3>
-                <p>A modern e-learning platform built with React, Node.js, and MongoDB. This comprehensive system provides interactive learning experiences with course management, progress tracking, and multimedia content delivery.</p>
-                <p>The platform features adaptive learning paths, real-time collaboration tools, and a robust assessment system for both students and educators.</p>
-                
-                <div class="analytics-features">
-                    <div class="feature-item">
-                        <i class="fas fa-graduation-cap"></i>
-                        <span>Course Management</span>
-                    </div>
-                    <div class="feature-item">
-                        <i class="fas fa-chart-line"></i>
-                        <span>Progress Tracking</span>
-                    </div>
-                    <div class="feature-item">
-                        <i class="fas fa-video"></i>
-                        <span>Multimedia Content</span>
-                    </div>
-                    <div class="feature-item">
-                        <i class="fas fa-users"></i>
-                        <span>Student Collaboration</span>
-                    </div>
-                    <div class="feature-item">
-                        <i class="fas fa-clipboard-check"></i>
-                        <span>Assessment System</span>
-                    </div>
-                    <div class="feature-item">
-                        <i class="fas fa-mobile-alt"></i>
-                        <span>Mobile Learning</span>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="analytics-gallery">
-                <div class="analytics-item">
-                    <img src="educ/Screenshot 2025-08-29 163224.png" alt="E-Learning Platform - Main Interface">
-                </div>
-                
-                <div class="analytics-item">
-                    <img src="educ/Screenshot 2025-08-29 161213.png" alt="E-Learning Platform - Course View">
-                </div>
-            </div>
-        `;
-        
-        modal.classList.add('show');
-    }
-    
-    function showFunnelModal() {
-        const modalTitle = document.getElementById('modalTitle');
-        const modalBody = document.getElementById('modalBody');
-        
-        modalTitle.textContent = 'Sales Funnel Design';
-        
-        modalBody.innerHTML = `
-            <div class="analytics-description">
-                <h3>High-Converting Sales Funnel Platform</h3>
-                <p>A sophisticated sales funnel system built with React, Node.js, and MongoDB. This platform creates optimized conversion paths with advanced lead capture, A/B testing capabilities, and comprehensive analytics tracking.</p>
-                <p>The system features intelligent funnel optimization, multi-step conversion processes, and real-time performance monitoring to maximize conversion rates and ROI.</p>
-                
-                <div class="analytics-features">
-                    <div class="feature-item">
-                        <i class="fas fa-filter"></i>
-                        <span>Funnel Optimization</span>
-                    </div>
-                    <div class="feature-item">
-                        <i class="fas fa-mouse-pointer"></i>
-                        <span>Lead Capture</span>
-                    </div>
-                    <div class="feature-item">
-                        <i class="fas fa-chart-pie"></i>
-                        <span>Conversion Analytics</span>
-                    </div>
-                    <div class="feature-item">
-                        <i class="fas fa-flask"></i>
-                        <span>A/B Testing</span>
-                    </div>
-                    <div class="feature-item">
-                        <i class="fas fa-bullseye"></i>
-                        <span>Target Optimization</span>
-                    </div>
-                    <div class="feature-item">
-                        <i class="fas fa-tachometer-alt"></i>
-                        <span>Performance Monitoring</span>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="analytics-gallery">
-                <div class="analytics-item">
-                    <img src="funnel/Screenshot 2025-08-29 183510.png" alt="Sales Funnel Design - Main Interface">
-                </div>
-                
-                <div class="analytics-item">
-                    <img src="funnel/Screenshot 2025-08-29 182728.png" alt="Sales Funnel Design - Funnel Builder">
-                </div>
-            </div>
-        `;
-        
-        modal.classList.add('show');
-    }
-    
-    function showPorblogModal() {
-        const modalTitle = document.getElementById('modalTitle');
-        const modalBody = document.getElementById('modalBody');
-        
-        modalTitle.textContent = 'Portfolio & Blog';
-        
-        modalBody.innerHTML = `
-            <div class="analytics-description">
-                <h3>Professional Portfolio & Blog Platform</h3>
-                <p>A modern portfolio website with integrated blog system built with HTML5, CSS3, and JavaScript. This platform showcases professional work while providing a content management system for sharing insights and updates.</p>
-                <p>The system features responsive design, SEO optimization, and a clean, professional interface that highlights your work and expertise effectively.</p>
-                
-                <div class="analytics-features">
-                    <div class="feature-item">
-                        <i class="fas fa-briefcase"></i>
-                        <span>Portfolio Showcase</span>
-                    </div>
-                    <div class="feature-item">
-                        <i class="fas fa-blog"></i>
-                        <span>Blog System</span>
-                    </div>
-                    <div class="feature-item">
-                        <i class="fas fa-mobile-alt"></i>
-                        <span>Responsive Design</span>
-                    </div>
-                    <div class="feature-item">
-                        <i class="fas fa-search"></i>
-                        <span>SEO Optimized</span>
-                    </div>
-                    <div class="feature-item">
-                        <i class="fas fa-palette"></i>
-                        <span>Modern UI/UX</span>
-                    </div>
-                    <div class="feature-item">
-                        <i class="fas fa-rocket"></i>
-                        <span>Fast Performance</span>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="analytics-gallery">
-                <div class="analytics-item">
-                    <img src="porblog/Screenshot 2025-08-29 143035.png" alt="Portfolio & Blog - Main Interface">
-                </div>
-                
-                <div class="analytics-item">
-                    <img src="porblog/Screenshot 2025-08-29 024352.png" alt="Portfolio & Blog - Portfolio View">
-                </div>
-                
-                <div class="analytics-item">
-                    <img src="porblog/Screenshot 2025-08-29 023433.png" alt="Portfolio & Blog - Blog Section">
-                </div>
-            </div>
-        `;
-        
-        modal.classList.add('show');
-    }
-    
-    function showEcomModal() {
-        const modalTitle = document.getElementById('modalTitle');
-        const modalBody = document.getElementById('modalBody');
-        
-        modalTitle.textContent = 'E-commerce Platform';
-        
-        modalBody.innerHTML = `
-            <div class="analytics-description">
-                <h3>Complete Online Shopping Platform</h3>
-                <p>A comprehensive e-commerce solution built with React, PHP, and MySQL. This platform provides a complete online shopping experience with product management, secure payment processing, and advanced inventory control.</p>
-                <p>The system features responsive design, user authentication, order management, and seamless integration with payment gateways for a professional online store experience.</p>
-                
-                <div class="analytics-features">
-                    <div class="feature-item">
-                        <i class="fas fa-shopping-cart"></i>
-                        <span>Product Catalog</span>
-                    </div>
-                    <div class="feature-item">
-                        <i class="fas fa-credit-card"></i>
-                        <span>Payment Integration</span>
-                    </div>
-                    <div class="feature-item">
-                        <i class="fas fa-boxes"></i>
-                        <span>Inventory Management</span>
-                    </div>
-                    <div class="feature-item">
-                        <i class="fas fa-user-shield"></i>
-                        <span>User Authentication</span>
-                    </div>
-                    <div class="feature-item">
-                        <i class="fas fa-shipping-fast"></i>
-                        <span>Order Management</span>
-                    </div>
-                    <div class="feature-item">
-                        <i class="fas fa-mobile-alt"></i>
-                        <span>Mobile Responsive</span>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="analytics-gallery">
-                <div class="analytics-item">
-                    <img src="ecom/Screenshot 2025-08-30 230322.png" alt="E-commerce Platform - Main Interface">
-                </div>
-                
-                <div class="analytics-item">
-                    <img src="ecom/Screenshot 2025-08-30 225259.png" alt="E-commerce Platform - Product View">
-                </div>
-                
-                <div class="analytics-item">
-                    <img src="ecom/Screenshot 2025-08-30 224848.png" alt="E-commerce Platform - Shopping Cart">
-                </div>
-                
-                <div class="analytics-item">
-                    <img src="ecom/Screenshot 2025-08-30 223332.png" alt="E-commerce Platform - Checkout Process">
-                </div>
-            </div>
-        `;
-        
-        modal.classList.add('show');
-    }
 });
